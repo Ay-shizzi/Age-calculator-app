@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  
+  <title>Frontend Mentor | Age calculator app</title>
+
+  <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,400;1,800&display=swap');
+:root{
+---Purple: hsl(259, 100%, 65%);
+---Light-red: hsl(0, 100%, 67%);
+---White: hsl(0, 0%, 100%);
+---Off-white: hsl(0, 0%, 94%);
+---Light-grey: hsl(0, 0%, 86%);
+---Smokey-grey: hsl(0, 1%, 44%);
+---Off-black: hsl(0, 0%, 8%);
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(---Light-grey);
+    min-height: 100vh;
+    font-family: 'Poppins', sans-serif;
+}
+.container{
+    background-color: var(---White);
+    border-radius: 10px;
+    border-bottom-right-radius: 120px;
+    padding: 20px;
+    min-width: 450px;
+}
+.inputs{
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    position: relative;
+}
+input{
+    outline: none;
+    border: 1px solid var(---Smokey-grey);
+    border-radius: 5px;
+    width: 80px;
+    padding: 10px;
+    font-weight: 700;
+}
+label{
+    display: block;
+    font-size: 10px;
+    margin-bottom: 5px;
+}
+.error_message{
+    font-family: sans-serif;
+    font-style: italic;
+    font-size: 8px;
+    margin-top: 7px;
+    color: var(---Light-red);
+    visibility: hidden;
+}
+hr{
+    margin: 20px 0;
+    width: 90%;
+}
+button img{
+    height: 30px;
+}
+button{
+    position: absolute;
+    border-radius: 50%;
+    border: none;
+    outline: none;
+    background-color: var(---Off-black);
+    padding: 10px 11px;
+    right: 15px;
+    top: 65px;
+    cursor: pointer;
+}
+button:hover{
+    background-color: var(---Purple);
+}
+h1{
+    font-size: 48px;
+    font-weight: 800;
+    font-style: italic;
+}
+span{
+    color: var(---Purple);
+}
+
+@media screen and (max-width: 480px){
+    .container{
+        min-width: 300px;
+    }
+    input{
+        width: 50px;
+        padding: 5px;
+    }
+    button{
+        right: 110px;
+        top: 60px;
+    }
+    h1{
+        font-size: 38px;
+    }
+}
+
+    .attribution { font-size: 11px; text-align: center; margin-top: 30px; }
+    .attribution a { color: hsl(228, 45%, 44%); }
+  </style>
+</head>
+<body>
+
+  <main class="container">
+    <div class="inputs">
+        <div class="day">
+            <label for="day">DAY</label>
+            <input type="text" placeholder="DD" id="day_input">
+            <p id="day_error" class="error_message">this field is required</p>
+        </div>
+        <div class="month">
+            <label for="month">MONTH</label>
+            <input type="text" placeholder="MM" id="month_input">
+            <p id="month_error" class="error_message">this field is required</p>
+        </div>
+        <div class="year">
+            <label for="year">YEAR</label>
+            <input type="text" placeholder="YY" id="year_input">
+            <p id="year_error" class="error_message">this field is required</p>
+        </div>
+        <button id="btn"><img src="./assets/images/icon-arrow.svg" alt=""></button>
+    </div>
+    <hr>
+    <div class="output">
+        <h1><span id="year_output">--</span> years</h1>
+        <h1><span id="month_output">--</span> months</h1>
+        <h1><span id="day_output">--</span> days</h1>
+    </div>
+</main>
+  
+  <footer class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
+    Coded by <a href="#">Lawal Abdullahi (Ay-shizzi)</a>.
+  </footer>
+
+
+  <script>
+const dayInput = document.getElementById('day_input');
+const monthInput = document.getElementById('month_input');
+const yearInput = document.getElementById('year_input');
+
+const yearError = document.getElementById('year_error');
+const monthError = document.getElementById('month_error');
+const dayError = document.getElementById('day_error');
+
+const dayOutput = document.getElementById('day_output');
+const monthOutput = document.getElementById('month_output');
+const yearOutput = document.getElementById('year_output');
+const button = document.getElementById('btn')
+
+button.addEventListener('click', getAge);
+
+let date = new Date();
+let year = date.getFullYear();
+let day = date.getDate();
+let month = date.getMonth()+1;
+let months = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
+
+function getAge(){
+
+    let m = months[monthInput.value-1];
+
+    if (dayInput.value > day){
+        day = day + months[month - 1];
+        month = month - 1;
+    }
+    if(monthInput.value > month){
+        month = month + 12;
+        year = year - 1;
+    }
+
+    let dayResult = day - dayInput.value;
+    let monthResult = month - monthInput.value;
+    let yearResult = year - yearInput.value;
+
+    if(dayInput.value == ''){
+        dayError.style.visibility = 'visible';
+        dayInput.style.border = '1px solid hsl(0, 100%, 67%)';
+        dayOutput.innerHTML = '--';
+    }else if(dayInput.value > m){
+        dayError.style.visibility = 'visible';
+        dayInput.style.border = '1px solid hsl(0, 100%, 67%)';
+        dayOutput.innerHTML = '--';
+    }else{
+        dayOutput.innerHTML = dayResult;
+        dayError.style.visibility = 'hidden';
+        dayInput.style.border = '1px solid var(---Smokey-grey)';
+    }
+
+    if(monthInput.value == ''){
+        monthError.style.visibility = 'visible';
+        monthInput.style.border = '1px solid hsl(0, 100%, 67%)';
+        monthOutput.innerHTML = '--';
+    }else if(monthInput.value > 12){
+        monthError.style.visibility = 'visible';
+        monthInput.style.border = '1px solid hsl(0, 100%, 67%)';
+        monthOutput.innerHTML = '--';
+    }else{
+        monthOutput.innerHTML = monthResult;
+        monthError.style.visibility = 'hidden';
+        monthInput.style.border = '1px solid var(---Smokey-grey)';
+    }
+    
+    if(yearInput.value == ''){
+        yearError.style.visibility = 'visible';
+        yearInput.style.border = '1px solid hsl(0, 100%, 67%)';
+        yearOutput.innerHTML = '--';
+    }else if(yearInput.value > year){
+        yearError.style.visibility = 'visible';
+        yearInput.style.border = '1px solid hsl(0, 100%, 67%)';
+        yearOutput.innerHTML = '--';
+    }
+    else{
+        yearOutput.innerHTML = yearResult;
+        yearError.style.visibility = 'hidden';
+        yearInput.style.border = '1px solid var(---Smokey-grey)';
+    }
+}
+  </script>
+</body>
+</html>

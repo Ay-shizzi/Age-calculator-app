@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="mysolution.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <main class="container">
+        <div class="inputs">
+            <div class="day">
+                <label for="day">DAY</label>
+                <input type="text" placeholder="DD" id="day_input">
+                <p id="day_error" class="error_message">this field is required</p>
+            </div>
+            <div class="month">
+                <label for="month">MONTH</label>
+                <input type="text" placeholder="MM" id="month_input">
+                <p id="month_error" class="error_message">this field is required</p>
+            </div>
+            <div class="year">
+                <label for="year">YEAR</label>
+                <input type="text" placeholder="YY" id="year_input">
+                <p id="year_error" class="error_message">this field is required</p>
+            </div>
+            <button id="btn"><img src="./assets/images/icon-arrow.svg" alt=""></button>
+        </div>
+        <hr>
+        <div class="output">
+            <h1><span id="year_output">--</span> years</h1>
+            <h1><span id="month_output">--</span> months</h1>
+            <h1><span id="day_output">--</span> days</h1>
+        </div>
+    </main>
+
+    <script src="mysolution.js"></script>
+</body>
+</html>
